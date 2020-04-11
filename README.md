@@ -1,6 +1,12 @@
 ## wechat-spring-boot-starter
 为对接微信提供快速 API 能力，包括微信、微信小程序、微信第三方平台
 
+## 支持列表
+
+### 1.0.0
+- 获取验证票据和通用消息等解密接口
+`com.github.developer.weapons.service.WechatComponentService.getVerifiedInfo`
+
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
 ```xml
@@ -19,5 +25,3 @@
     <version>1.0.0</version>
 </dependency>
 ```
-3. 配置必备属性
-4. 引入操作
