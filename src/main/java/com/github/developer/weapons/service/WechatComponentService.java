@@ -19,7 +19,14 @@ public class WechatComponentService implements InitializingBean {
     @Autowired
     private WechatComponentProperties wechatComponentProperties;
 
-    public Map<String, String> getVerifedInfo(ComponentVerifyInfo verifyInfo) {
+
+    /**
+     * 通过 verifyInfo 获取授权的订阅号信息
+     *
+     * @param verifyInfo
+     * @return
+     */
+    public Map<String, String> getVerifiedInfo(ComponentVerifyInfo verifyInfo) {
         String decodeMsg = null;
         try {
             decodeMsg = wxBizMsgCrypt.decryptMsg(verifyInfo.getSignature(), verifyInfo.getTimestamp(), verifyInfo.getNonce(), verifyInfo.getBody());
