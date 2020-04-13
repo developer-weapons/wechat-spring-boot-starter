@@ -13,4 +13,5 @@ public class WechatComponentProperties {
     private String appId;
     private String token;
     private String aesKey;
+    private String secret;
 }
