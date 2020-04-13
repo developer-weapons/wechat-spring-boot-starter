@@ -6,6 +6,10 @@
 ### 1.0.0
 - 获取验证票据和通用消息等解密接口
 `com.github.developer.weapons.service.WechatComponentService.getVerifiedInfo`
+- 根据 ticket 获取 component_token
+`com.github.developer.weapons.service.WechatComponentService.getComponentTokenByTicket`
+- 根据 component_token 获取 pre_auth_code
+`com.github.developer.weapons.service.WechatComponentService.getPreAuthCodeByComponentToken`
 
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
