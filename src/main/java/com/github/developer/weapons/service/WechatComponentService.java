@@ -177,6 +177,19 @@ public class WechatComponentService implements InitializingBean {
         }
     }
 
+    /**
+     * 根据 componentToken 生成登录地址
+     *
+     * @param componentToken
+     * @param redirectUri
+     * @return
+     */
+    public String generateLoginUrl(String componentToken, String redirectUri) {
+        String url = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=1";
+        String authCode = getPreAuthCode(componentToken);
+        return String.format(url, wechatComponentProperties.getAppId(), authCode, redirectUri);
+    }
+
 
     private String post(String url, JSONObject body) {
         Request request = new Request.Builder()

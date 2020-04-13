@@ -17,6 +17,8 @@
 `com.github.developer.weapons.service.WechatComponentService.getAuthorizerInfo`
 - 根据回复消息自动加密
 `com.github.developer.weapons.service.WechatComponentService.encryptMsg`
+- 根据条件获取授权链接
+`com.github.developer.weapons.service.WechatComponentService.generateLoginUrl`
 
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
