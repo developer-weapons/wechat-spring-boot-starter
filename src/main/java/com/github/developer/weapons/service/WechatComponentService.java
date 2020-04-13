@@ -39,7 +39,15 @@ public class WechatComponentService implements InitializingBean {
         String decodeMsg = null;
         try {
             decodeMsg = wxBizMsgCrypt.decryptMsg(verifyInfo.getSignature(), verifyInfo.getTimestamp(), verifyInfo.getNonce(), verifyInfo.getBody());
-            return XmlUtils.xmlToMap(decodeMsg);
+            Map<String, String> maps = XmlUtils.xmlToMap(decodeMsg);
+            String appId = maps.get("AppId");
+            String infoType = maps.get("InfoType");
+            if ("component_verify_ticket".equals(infoType)) {
+                if (!StringUtils.equals(wechatComponentProperties.getAppId(), appId)) {
+                    throw new WechatException("component_verify_ticket does not match appId : " + wechatComponentProperties.getAppId());
+                }
+            }
+            return maps;
         } catch (Exception e) {
             e.printStackTrace();
         }
