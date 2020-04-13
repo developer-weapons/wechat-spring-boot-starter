@@ -7,7 +7,6 @@ import com.github.developer.weapons.exception.WechatException;
 import com.github.developer.weapons.model.ComponentVerifyInfo;
 import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,7 +18,6 @@ import java.util.Map;
 /**
  * 微信第三方平台服务
  */
-@Slf4j
 public class WechatComponentService implements InitializingBean {
 
     @Autowired
@@ -49,6 +47,7 @@ public class WechatComponentService implements InitializingBean {
 
     /**
      * 根据 token 获取 preauthcode 用户授权订阅号
+     *
      * @param componentToken
      * @return
      */
@@ -70,6 +69,7 @@ public class WechatComponentService implements InitializingBean {
 
     /**
      * 根据缓存好的 Ticket 获取应用的 conponent_token
+     *
      * @param ticket
      * @return
      */
