@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.developer.weapons.config.WechatComponentProperties;
 import com.github.developer.weapons.exception.WechatException;
+import com.github.developer.weapons.model.ComponentAuthInfo;
+import com.github.developer.weapons.model.ComponentAuthorizerInfo;
 import com.github.developer.weapons.model.ComponentVerifyInfo;
 import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
@@ -44,6 +46,62 @@ public class WechatComponentService implements InitializingBean {
         return null;
     }
 
+    /**
+     * 根据授权账号的信息，获取授权账号的详细内容
+     *
+     * @param componentToken
+     * @param authorizerAppId
+     * @return
+     */
+    public ComponentAuthorizerInfo getAuthorizerInfo(String componentToken, String authorizerAppId) {
+        if (componentToken == null) {
+            throw new WechatException("componentToken is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info?component_access_token=" + componentToken;
+        JSONObject bodyObject = new JSONObject();
+        bodyObject.put("component_appid", wechatComponentProperties.getAppId());
+        bodyObject.put("authorizer_appid", authorizerAppId);
+        String post = post(url, bodyObject);
+        JSONObject jsonObject = JSON.parseObject(post);
+        ComponentAuthorizerInfo authorizerInfo = new ComponentAuthorizerInfo();
+        JSONObject authorizer_info = jsonObject.getJSONObject("authorizer_info");
+        JSONObject authorization_info = jsonObject.getJSONObject("authorization_info");
+        authorizerInfo.setQrcodeUrl(authorizer_info.getString("qrcode_url"));
+        authorizerInfo.setUserName(authorizer_info.getString("user_name"));
+        authorizerInfo.setNickName(authorizer_info.getString("nick_name"));
+        authorizerInfo.setHeadImg(authorizer_info.getString("head_img"));
+        authorizerInfo.setAuthorizerAppid(authorization_info.getString("authorizer_appid"));
+        authorizerInfo.setAuthorizerRefreshToken(authorization_info.getString("authorizer_refresh_token"));
+        return authorizerInfo;
+    }
+
+    /**
+     * 根据token 和授权的 auth code 获取授权账号的信息
+     *
+     * @param componentToken
+     * @param authCode
+     * @return
+     */
+    public ComponentAuthInfo getAuth(String componentToken, String authCode) {
+        if (componentToken == null) {
+            throw new WechatException("componentToken is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=" + componentToken;
+        JSONObject bodyObject = new JSONObject();
+        bodyObject.put("component_appid", wechatComponentProperties.getAppId());
+        bodyObject.put("authorization_code", authCode);
+        String post = post(url, bodyObject);
+        JSONObject jsonObject = JSON.parseObject(post);
+        JSONObject authorizationInfo = jsonObject.getJSONObject("authorization_info");
+        if (authorizationInfo != null && StringUtils.isNotBlank(authorizationInfo.getString("authorizer_access_token"))) {
+            ComponentAuthInfo authorizerToken = new ComponentAuthInfo();
+            authorizerToken.setToken(authorizationInfo.getString("authorizer_access_token"));
+            authorizerToken.setAppId(authorizationInfo.getString("authorizer_appid"));
+            return authorizerToken;
+        } else {
+            throw new WechatException("getAuth error with " + post);
+        }
+    }
 
     /**
      * 根据 token 获取 preauthcode 用户授权订阅号
@@ -51,7 +109,7 @@ public class WechatComponentService implements InitializingBean {
      * @param componentToken
      * @return
      */
-    public String getPreAuthCodeByComponentToken(String componentToken) {
+    public String getPreAuthCode(String componentToken) {
         if (componentToken == null) {
             throw new WechatException("componentToken is missing");
         }
@@ -73,7 +131,7 @@ public class WechatComponentService implements InitializingBean {
      * @param ticket
      * @return
      */
-    public String getComponentTokenByTicket(String ticket) {
+    public String getComponentToken(String ticket) {
         if (wechatComponentProperties.getSecret() == null) {
             throw new WechatException("wechat.component.secret is missing");
         }
