@@ -6,8 +6,10 @@ import com.github.developer.weapons.config.WechatComponentProperties;
 import com.github.developer.weapons.exception.WechatException;
 import com.github.developer.weapons.model.ComponentAuthInfo;
 import com.github.developer.weapons.model.ComponentAuthorizerInfo;
+import com.github.developer.weapons.model.ComponentTextMessage;
 import com.github.developer.weapons.model.ComponentVerifyInfo;
 import com.github.developer.weapons.util.XmlUtils;
+import com.github.developer.weapons.util.aes.AesException;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 微信第三方平台服务
@@ -157,6 +160,23 @@ public class WechatComponentService implements InitializingBean {
             throw new WechatException("obtain component_access_token error with " + post);
         }
     }
+
+
+    /**
+     * 根据回复消息进行自动加密
+     *
+     * @param componentTextMessage
+     * @return
+     */
+    public String encryptMsg(ComponentTextMessage componentTextMessage) {
+        String str = XmlUtils.objectToXml(componentTextMessage);
+        try {
+            return wxBizMsgCrypt.encryptMsg(str, String.valueOf(System.currentTimeMillis()), UUID.randomUUID().toString().replace("-", ""));
+        } catch (AesException e) {
+            throw new WechatException("encryptMsg error", e);
+        }
+    }
+
 
     private String post(String url, JSONObject body) {
         Request request = new Request.Builder()

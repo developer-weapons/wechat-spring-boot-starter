@@ -4,6 +4,7 @@
 ## 支持列表
 
 ### 1.0.0
+#### 第三方平台
 - 获取验证票据和通用消息等解密接口
 `com.github.developer.weapons.service.WechatComponentService.getVerifiedInfo`
 - 根据 ticket 获取 component_token
@@ -14,6 +15,8 @@
 `com.github.developer.weapons.service.WechatComponentService.getAuth`
 - 根据授权信息获取详细资料
 `com.github.developer.weapons.service.WechatComponentService.getAuthorizerInfo`
+- 根据回复消息自动加密
+`com.github.developer.weapons.service.WechatComponentService.encryptMsg`
 
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库

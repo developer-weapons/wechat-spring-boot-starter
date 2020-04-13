@@ -1,6 +1,6 @@
 package com.github.developer.weapons.util;
 
-import com.github.developer.weapons.model.WechatTextMessage;
+import com.github.developer.weapons.model.ComponentTextMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -29,7 +29,7 @@ public class XmlUtils {
         return map;
     }
 
-    public static String objectToXml(WechatTextMessage message) {
+    public static String objectToXml(ComponentTextMessage message) {
         XStream xs = new XStream();
         xs.alias("xml", message.getClass());
         return xs.toXML(message);
