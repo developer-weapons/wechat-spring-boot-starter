@@ -52,9 +52,8 @@ public class WechatComponentService implements InitializingBean {
             }
             return maps;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new WechatException("component_verify_ticket error", e);
         }
-        return null;
     }
 
     /**
