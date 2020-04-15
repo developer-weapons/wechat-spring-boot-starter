@@ -10,4 +10,9 @@ public class ComponentAuthorizerInfo {
     private String headImg;
     private String qrcodeUrl;
     private String authorizerRefreshToken;
+
+    // 认证状态
+    private Integer verifyTypeInfo;
+
+    
 }

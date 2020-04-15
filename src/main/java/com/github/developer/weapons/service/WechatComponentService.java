@@ -82,6 +82,7 @@ public class WechatComponentService implements InitializingBean {
         authorizerInfo.setHeadImg(authorizer_info.getString("head_img"));
         authorizerInfo.setAuthorizerAppid(authorization_info.getString("authorizer_appid"));
         authorizerInfo.setAuthorizerRefreshToken(authorization_info.getString("authorizer_refresh_token"));
+        authorizerInfo.setVerifyTypeInfo(authorization_info.getJSONObject("verify_type_info").getInteger("id"));
         return authorizerInfo;
     }
 
