@@ -4,31 +4,27 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.developer.weapons.config.WechatComponentProperties;
 import com.github.developer.weapons.exception.WechatException;
-import com.github.developer.weapons.model.ComponentAuthInfo;
-import com.github.developer.weapons.model.ComponentAuthorizerInfo;
-import com.github.developer.weapons.model.ComponentTextMessage;
-import com.github.developer.weapons.model.ComponentVerifyInfo;
+import com.github.developer.weapons.model.component.ComponentAuthInfo;
+import com.github.developer.weapons.model.component.ComponentAuthorizerInfo;
+import com.github.developer.weapons.model.component.ComponentTextMessage;
+import com.github.developer.weapons.model.component.ComponentVerifyInfo;
 import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.AesException;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
-import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
 /**
  * 微信第三方平台服务
  */
-public class WechatComponentService implements InitializingBean {
+public class WechatComponentService extends WechatService implements InitializingBean {
 
     @Autowired
     private WechatComponentProperties wechatComponentProperties;
-
-    private OkHttpClient okHttpClient = new OkHttpClient();
 
     private WXBizMsgCrypt wxBizMsgCrypt;
 
@@ -188,25 +184,6 @@ public class WechatComponentService implements InitializingBean {
         String url = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=1";
         String authCode = getPreAuthCode(componentToken);
         return String.format(url, wechatComponentProperties.getAppId(), authCode, redirectUri);
-    }
-
-
-    private String post(String url, JSONObject body) {
-        Request request = new Request.Builder()
-                .addHeader("body-type", "application/json")
-                .url(url)
-                .post(RequestBody.create(MediaType.parse("application/json"), body.toJSONString()))
-                .build();
-        try {
-            Response execute = okHttpClient.newCall(request).execute();
-            if (execute.isSuccessful()) {
-                assert execute.body() != null;
-                return execute.body().string();
-            }
-            throw new WechatException("post to wechat endpoint " + url + " error " + execute.message());
-        } catch (IOException e) {
-            throw new WechatException("post to wechat endpoint " + url + " error ", e);
-        }
     }
 
     @Override

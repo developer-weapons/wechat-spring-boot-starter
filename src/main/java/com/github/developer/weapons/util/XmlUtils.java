@@ -1,6 +1,6 @@
 package com.github.developer.weapons.util;
 
-import com.github.developer.weapons.model.ComponentTextMessage;
+import com.github.developer.weapons.model.component.ComponentTextMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

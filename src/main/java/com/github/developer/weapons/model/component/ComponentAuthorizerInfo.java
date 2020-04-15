@@ -1,4 +1,4 @@
-package com.github.developer.weapons.model;
+package com.github.developer.weapons.model.component;
 
 import lombok.Data;
 
@@ -14,5 +14,5 @@ public class ComponentAuthorizerInfo {
     // 认证状态
     private Integer verifyTypeInfo;
 
-    
+
 }

@@ -13,7 +13,7 @@
 
     <groupId>com.github.developer.weapons</groupId>
     <artifactId>wechat-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.0</version>
     <distributionManagement>
         <repository>
             <id>developer-weapons-repository</id>

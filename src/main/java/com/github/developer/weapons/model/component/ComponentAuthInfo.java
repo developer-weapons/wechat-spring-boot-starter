@@ -1,4 +1,4 @@
-package com.github.developer.weapons.model;
+package com.github.developer.weapons.model.component;
 
 import lombok.Data;
 
