@@ -20,6 +20,11 @@
 - 根据条件获取授权链接
 `com.github.developer.weapons.service.WechatComponentService.generateLoginUrl`
 
+### 1.2.0
+#### 第三方平台
+- 根据 token 和 openid 获取用户资料
+`com.github.developer.weapons.service.WechatOfficialService.getUserInfo`
+
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
 ```xml
