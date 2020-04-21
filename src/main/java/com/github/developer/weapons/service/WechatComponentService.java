@@ -181,7 +181,7 @@ public class WechatComponentService extends WechatService implements Initializin
      * @return
      */
     public String generateLoginUrl(String componentToken, String redirectUri) {
-        String url = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=1";
+        String url = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&auth_type=1&pre_auth_code=%s&redirect_uri=%s";
         String authCode = getPreAuthCode(componentToken);
         return String.format(url, wechatComponentProperties.getAppId(), authCode, redirectUri);
     }
