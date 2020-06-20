@@ -77,6 +77,7 @@ public class WechatComponentService extends WechatService implements Initializin
         authorizerInfo.setNickName(authorizer_info.getString("nick_name"));
         authorizerInfo.setHeadImg(authorizer_info.getString("head_img"));
         authorizerInfo.setVerifyTypeInfo(authorizer_info.getJSONObject("verify_type_info").getInteger("id"));
+        authorizerInfo.setServiceTypeInfo(authorizer_info.getJSONObject("service_type_info").getInteger("id"));
         authorizerInfo.setAuthorizerAppid(authorization_info.getString("authorizer_appid"));
         authorizerInfo.setAuthorizerRefreshToken(authorization_info.getString("authorizer_refresh_token"));
         return authorizerInfo;
