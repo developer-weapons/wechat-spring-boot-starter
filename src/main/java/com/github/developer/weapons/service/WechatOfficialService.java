@@ -2,18 +2,16 @@ package com.github.developer.weapons.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.developer.weapons.exception.WechatException;
+import com.github.developer.weapons.model.official.OfficialCustomMessage;
 import com.github.developer.weapons.model.official.OfficialUserInfo;
 import com.github.developer.weapons.model.official.OfficialUserQuery;
-import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
 import org.apache.commons.lang3.StringUtils;
 
 
 /**
  * 微信订阅号
  */
-public class WechatOfficialService extends WechatService {
-
-    private WXBizMsgCrypt wxBizMsgCrypt;
+public class WechatOfficialService extends WechatBaseService {
 
     /**
      * 通过 officialUserQuery 获取用户资料
@@ -37,5 +35,23 @@ public class WechatOfficialService extends WechatService {
         } else {
             throw new WechatException("obtain user info error with " + body);
         }
+    }
+
+
+    /**
+     * 发送消息
+     * POST https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
+     *
+     * @param officialCustomMessage
+     */
+    public void sendMsg(OfficialCustomMessage officialCustomMessage) {
+        if (officialCustomMessage.getAccessToken() == null) {
+            throw new WechatException("accessToken is missing");
+        }
+        if (officialCustomMessage.getTouser() == null) {
+            throw new WechatException("openId is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + officialCustomMessage.getAccessToken();
+        post(url, JSON.toJSONString(officialCustomMessage));
     }
 }

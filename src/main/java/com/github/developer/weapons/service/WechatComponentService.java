@@ -21,7 +21,7 @@ import java.util.UUID;
 /**
  * 微信第三方平台服务
  */
-public class WechatComponentService extends WechatService implements InitializingBean {
+public class WechatComponentService extends WechatBaseService implements InitializingBean {
 
     @Autowired
     private WechatComponentProperties wechatComponentProperties;
