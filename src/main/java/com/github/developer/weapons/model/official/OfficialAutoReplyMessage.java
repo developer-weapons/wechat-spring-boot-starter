@@ -1,6 +1,7 @@
 package com.github.developer.weapons.model.official;
 
 import com.github.developer.weapons.model.Token;
+import com.github.developer.weapons.util.XmlUtils;
 import lombok.Getter;
 
 import java.util.Date;
@@ -104,5 +105,14 @@ public class OfficialAutoReplyMessage extends Token<OfficialAutoReplyMessage> {
         OfficialAutoReplyMessage officialAutoReplyMessage = new OfficialAutoReplyMessage();
         officialAutoReplyMessage.withCreateTime(new Date().getTime());
         return officialAutoReplyMessage;
+    }
+
+    /**
+     * 转化 xml 格式
+     *
+     * @return
+     */
+    public String toXml() {
+        return XmlUtils.objectToXml(this);
     }
 }
