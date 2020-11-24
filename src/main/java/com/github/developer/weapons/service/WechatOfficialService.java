@@ -2,6 +2,7 @@ package com.github.developer.weapons.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.developer.weapons.exception.WechatException;
+import com.github.developer.weapons.model.official.OfficialAutoReplyMessage;
 import com.github.developer.weapons.model.official.OfficialCustomMessage;
 import com.github.developer.weapons.model.official.OfficialUserInfo;
 import com.github.developer.weapons.model.official.OfficialUserQuery;
@@ -67,11 +68,11 @@ public class WechatOfficialService extends WechatBaseService {
     /**
      * 转换构建好的类型为 String
      *
-     * @param officialCustomMessage
+     * @param officialAutoReplyMessage
      * @return
      */
-    public String toMsg(OfficialCustomMessage officialCustomMessage) {
-        return XmlUtils.objectToXml(officialCustomMessage);
+    public String toMsg(OfficialAutoReplyMessage officialAutoReplyMessage) {
+        return XmlUtils.objectToXml(officialAutoReplyMessage);
     }
 
     /**

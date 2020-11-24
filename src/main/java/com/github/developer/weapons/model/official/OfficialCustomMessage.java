@@ -6,6 +6,9 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 公众号自定义消息
+ */
 public class OfficialCustomMessage extends Token<OfficialCustomMessage> {
     /**
      * 接收消息的 OPENID
