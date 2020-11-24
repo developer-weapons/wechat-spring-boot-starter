@@ -12,7 +12,6 @@ import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.AesException;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -21,7 +20,7 @@ import java.util.UUID;
 /**
  * 微信第三方平台服务
  */
-public class WechatComponentService extends WechatBaseService implements InitializingBean {
+public class WechatComponentService extends WechatBaseService {
 
     @Autowired
     private WechatComponentProperties wechatComponentProperties;
@@ -35,6 +34,7 @@ public class WechatComponentService extends WechatBaseService implements Initial
      * @return
      */
     public Map<String, String> getVerifiedInfo(ComponentVerifyInfo verifyInfo) {
+        beforeCalling();
         String decodeMsg = null;
         try {
             decodeMsg = wxBizMsgCrypt.decryptMsg(verifyInfo.getSignature(), verifyInfo.getTimestamp(), verifyInfo.getNonce(), verifyInfo.getBody());
@@ -166,6 +166,7 @@ public class WechatComponentService extends WechatBaseService implements Initial
      * @return
      */
     public String encryptMsg(ComponentTextMessage componentTextMessage) {
+        beforeCalling();
         String str = XmlUtils.objectToXml(componentTextMessage);
         try {
             return wxBizMsgCrypt.encryptMsg(str, String.valueOf(System.currentTimeMillis()), UUID.randomUUID().toString().replace("-", ""));
@@ -187,8 +188,7 @@ public class WechatComponentService extends WechatBaseService implements Initial
         return String.format(url, wechatComponentProperties.getAppId(), authCode, redirectUri);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    private void beforeCalling() {
         if (wechatComponentProperties.getAesKey() == null) {
             throw new WechatException("wechat.component.aesKey is missing");
         }
@@ -198,6 +198,10 @@ public class WechatComponentService extends WechatBaseService implements Initial
         if (wechatComponentProperties.getAppId() == null) {
             throw new WechatException("wechat.component.appId is missing");
         }
-        wxBizMsgCrypt = new WXBizMsgCrypt(wechatComponentProperties.getToken(), wechatComponentProperties.getAesKey(), wechatComponentProperties.getAppId());
+        try {
+            wxBizMsgCrypt = new WXBizMsgCrypt(wechatComponentProperties.getToken(), wechatComponentProperties.getAesKey(), wechatComponentProperties.getAppId());
+        } catch (AesException e) {
+            throw new WechatException("AesException " + e.getMessage());
+        }
     }
 }
