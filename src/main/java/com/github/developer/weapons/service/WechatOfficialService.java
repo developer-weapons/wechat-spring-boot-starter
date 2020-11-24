@@ -6,12 +6,14 @@ import com.github.developer.weapons.model.official.OfficialCustomMessage;
 import com.github.developer.weapons.model.official.OfficialUserInfo;
 import com.github.developer.weapons.model.official.OfficialUserQuery;
 import com.github.developer.weapons.util.XmlUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,23 @@ import java.util.Map;
  * 微信订阅号
  */
 public class WechatOfficialService extends WechatBaseService {
+
+    /**
+     * 验证请求是否正确
+     *
+     * @param signature
+     * @param timestamp
+     * @param nonce
+     * @param token
+     * @return
+     */
+    public boolean isValid(String signature, String timestamp, String nonce, String token) {
+        String[] values = {token, timestamp, nonce};
+        Arrays.sort(values);
+        String value = values[0] + values[1] + values[2];
+        String sign = DigestUtils.shaHex(value);
+        return StringUtils.equals(signature, sign);
+    }
 
     /**
      * 非加密的信息流转换为map
