@@ -59,6 +59,33 @@ public class WechatComponentService extends WechatBaseService {
      * @param authorizerAppId
      * @return
      */
+    public ComponentAuthInfo refreshAccessToken(String componentToken, String authorizerAppId, String authorizerRefreshToken) {
+        if (componentToken == null) {
+            throw new WechatException("componentToken is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/component/api_authorizer_token?component_access_token=" + componentToken;
+        JSONObject bodyObject = new JSONObject();
+        bodyObject.put("component_appid", wechatComponentProperties.getAppId());
+        bodyObject.put("authorizer_appid", authorizerAppId);
+        bodyObject.put("authorizer_refresh_token", authorizerRefreshToken);
+        String post = post(url, bodyObject);
+        JSONObject jsonObject = JSON.parseObject(post);
+        ComponentAuthorizerInfo authorizerInfo = new ComponentAuthorizerInfo();
+        String accessToken = jsonObject.getString("authorizer_access_token");
+        String refreshToken = jsonObject.getString("authorizer_refresh_token");
+        ComponentAuthInfo componentAuthInfo = new ComponentAuthInfo();
+        componentAuthInfo.setAuthorizerRefreshToken(refreshToken);
+        componentAuthInfo.setToken(accessToken);
+        return componentAuthInfo;
+    }
+
+    /**
+     * 根据授权账号的信息，获取授权账号的详细内容
+     *
+     * @param componentToken
+     * @param authorizerAppId
+     * @return
+     */
     public ComponentAuthorizerInfo getAuthorizerInfo(String componentToken, String authorizerAppId) {
         if (componentToken == null) {
             throw new WechatException("componentToken is missing");
