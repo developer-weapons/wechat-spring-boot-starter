@@ -128,10 +128,11 @@ public class WechatComponentService extends WechatBaseService {
         String post = post(url, bodyObject);
         JSONObject jsonObject = JSON.parseObject(post);
         JSONObject authorizationInfo = jsonObject.getJSONObject("authorization_info");
-        if (authorizationInfo != null && StringUtils.isNotBlank(authorizationInfo.getString("authorizer_access_token"))) {
+        if (authorizationInfo != null) {
             ComponentAuthInfo authorizerToken = new ComponentAuthInfo();
             authorizerToken.setToken(authorizationInfo.getString("authorizer_access_token"));
             authorizerToken.setAppId(authorizationInfo.getString("authorizer_appid"));
+            authorizerToken.setAuthorizerRefreshToken(authorizationInfo.getString("authorizer_refresh_token"));
             return authorizerToken;
         } else {
             throw new WechatException("getAuth error with " + post);
