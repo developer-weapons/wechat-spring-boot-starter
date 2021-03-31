@@ -2,10 +2,7 @@ package com.github.developer.weapons.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.developer.weapons.exception.WechatException;
-import com.github.developer.weapons.model.official.OfficialAutoReplyMessage;
-import com.github.developer.weapons.model.official.OfficialCustomMessage;
-import com.github.developer.weapons.model.official.OfficialUserInfo;
-import com.github.developer.weapons.model.official.OfficialUserQuery;
+import com.github.developer.weapons.model.official.*;
 import com.github.developer.weapons.util.XmlUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -96,6 +93,27 @@ public class WechatOfficialService extends WechatBaseService {
             return officialUserInfo;
         } else {
             throw new WechatException("obtain user info error with " + body);
+        }
+    }
+
+    /**
+     * https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
+     *
+     * @param accessToken
+     * @param nextOpenId
+     * @return
+     */
+    public Fan getFans(String accessToken, String nextOpenId) {
+        if (accessToken == null) {
+            throw new WechatException("accessToken is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + accessToken + "&next_openid=" + nextOpenId;
+        String body = get(url);
+        if (StringUtils.isNotBlank(body)) {
+            Fan fan = JSON.parseObject(body, Fan.class);
+            return fan;
+        } else {
+            throw new WechatException("obtain fan info error with " + body);
         }
     }
 
