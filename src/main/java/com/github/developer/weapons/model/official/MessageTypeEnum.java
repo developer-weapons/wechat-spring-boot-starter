@@ -2,7 +2,8 @@ package com.github.developer.weapons.model.official;
 
 public enum MessageTypeEnum {
     TEXT("text")
-    ,IMAGE("image")
+    ,IMAGE("image"),
+    MSGMENU("msgmenu")
     ;
     private String type;
 

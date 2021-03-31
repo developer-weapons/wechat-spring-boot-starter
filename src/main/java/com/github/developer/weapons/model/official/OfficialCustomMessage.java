@@ -3,6 +3,7 @@ package com.github.developer.weapons.model.official;
 import com.github.developer.weapons.model.Token;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,59 @@ public class OfficialCustomMessage extends Token<OfficialCustomMessage> {
      */
     @Getter
     private Map<String, String> text;
+
+    /**
+     * 列表
+     */
+    @Getter
+    private MenuMsg msgmenu;
+
+    /**
+     * 设置头文字
+     *
+     * @param content
+     * @return
+     */
+    public OfficialCustomMessage withHeadContent(String content) {
+        if (msgmenu == null) {
+            msgmenu = new MenuMsg();
+        }
+        msgmenu.setHeadContent(content);
+        return this;
+    }
+
+    /**
+     * 设置尾文字
+     *
+     * @param content
+     * @return
+     */
+    public OfficialCustomMessage withTailContent(String content) {
+        if (msgmenu == null) {
+            msgmenu = new MenuMsg();
+        }
+        msgmenu.setTailContent(content);
+        return this;
+    }
+
+    /**
+     * 设置按钮
+     *
+     * @return
+     */
+    public OfficialCustomMessage withMenu(String id, String content) {
+        if (msgmenu == null) {
+            msgmenu = new MenuMsg();
+        }
+        if (msgmenu.getList() == null) {
+            msgmenu.setList(new ArrayList<>());
+        }
+        MenuMsgItem menuMsgItem = new MenuMsgItem();
+        menuMsgItem.setId(id);
+        menuMsgItem.setContent(content);
+        msgmenu.getList().add(menuMsgItem);
+        return this;
+    }
 
     /**
      * 当内容是消息类型的时候设置发送内容
