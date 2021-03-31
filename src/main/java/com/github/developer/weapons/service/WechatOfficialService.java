@@ -107,7 +107,10 @@ public class WechatOfficialService extends WechatBaseService {
         if (accessToken == null) {
             throw new WechatException("accessToken is missing");
         }
-        String url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + accessToken + "&next_openid=" + nextOpenId;
+        String url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + accessToken;
+        if (StringUtils.isNotBlank(nextOpenId)) {
+            url += "&next_openid=" + nextOpenId;
+        }
         String body = get(url);
         if (StringUtils.isNotBlank(body)) {
             Fan fan = JSON.parseObject(body, Fan.class);
