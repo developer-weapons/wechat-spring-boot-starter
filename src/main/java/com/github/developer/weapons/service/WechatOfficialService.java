@@ -126,8 +126,9 @@ public class WechatOfficialService extends WechatBaseService {
      * POST https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
      *
      * @param officialCustomMessage
+     * @return
      */
-    public void sendMsg(OfficialCustomMessage officialCustomMessage) {
+    public String sendMsg(OfficialCustomMessage officialCustomMessage) {
         if (officialCustomMessage.getAccessToken() == null) {
             throw new WechatException("accessToken is missing");
         }
@@ -135,6 +136,6 @@ public class WechatOfficialService extends WechatBaseService {
             throw new WechatException("openId is missing");
         }
         String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + officialCustomMessage.getAccessToken();
-        post(url, JSON.toJSONString(officialCustomMessage));
+        return post(url, JSON.toJSONString(officialCustomMessage));
     }
 }

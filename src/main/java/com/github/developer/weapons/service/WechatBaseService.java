@@ -43,11 +43,9 @@ public class WechatBaseService {
             if (execute.isSuccessful()) {
                 assert execute.body() != null;
                 String result = execute.body().string();
-                System.out.println(result);
                 log.debug("WechatBaseService post, url : {}, body: {}, result : {}", url, body, result);
                 return result;
             }
-            System.out.println("post to wechat endpoint " + url + " error " + execute.message());
             log.error("WechatBaseService post error, url : {}, body: {}, message : {}", url, body, execute.message());
             throw new WechatException("post to wechat endpoint " + url + " error " + execute.message());
         } catch (IOException e) {
