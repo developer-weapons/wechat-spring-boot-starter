@@ -25,6 +25,13 @@
 - 根据 token 和 openid 获取用户资料
 `com.github.developer.weapons.service.WechatOfficialService.getUserInfo`
 
+### 1.2.8
+#### 公众号
+- 发送模板消息
+`com.github.developer.weapons.service.WechatOfficialService.sendTemplateMsg`
+- 发送消息
+`com.github.developer.weapons.service.WechatOfficialService.sendMsg`
+
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
 ```xml
@@ -40,6 +47,6 @@
 <dependency>
     <groupId>com.github.developer.weapons</groupId>
     <artifactId>wechat-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.8</version>
 </dependency>
 ```

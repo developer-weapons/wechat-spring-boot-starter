@@ -138,4 +138,22 @@ public class WechatOfficialService extends WechatBaseService {
         String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + officialCustomMessage.getAccessToken();
         return post(url, JSON.toJSONString(officialCustomMessage));
     }
+
+    /**
+     * 发送模板消息
+     * POST https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN
+     *
+     * @param officialTemplateMessage
+     * @return
+     */
+    public String sendTemplateMsg(OfficialTemplateMessage officialTemplateMessage) {
+        if (officialTemplateMessage.getAccessToken() == null) {
+            throw new WechatException("accessToken is missing");
+        }
+        if (officialTemplateMessage.getTouser() == null) {
+            throw new WechatException("openId is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + officialTemplateMessage.getAccessToken();
+        return post(url, JSON.toJSONString(officialTemplateMessage));
+    }
 }
