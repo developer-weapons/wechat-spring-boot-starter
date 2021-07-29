@@ -154,6 +154,8 @@ public class WechatOfficialService extends WechatBaseService {
             throw new WechatException("openId is missing");
         }
         String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + officialTemplateMessage.getAccessToken();
-        return post(url, JSON.toJSONString(officialTemplateMessage));
+        String body = JSON.toJSONString(officialTemplateMessage);
+        System.out.println(body);
+        return post(url, body);
     }
 }
