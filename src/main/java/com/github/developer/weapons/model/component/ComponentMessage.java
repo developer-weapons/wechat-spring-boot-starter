@@ -1,11 +1,10 @@
 package com.github.developer.weapons.model.component;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by codedrinker on 2019/4/27.
@@ -20,16 +19,13 @@ public class ComponentMessage {
     private String Content;
     private String MsgId;
     private Integer ArticleCount;
-    private Map Articles;
+    private List<ComponentMessageArticle> Articles;
 
     public ComponentMessage addArticle(ComponentMessageArticle article) {
-        Map value = new JSONObject();
-        value.put("Title", article.getTitle());
-        value.put("Description", article.getDescription());
-        value.put("PicUrl", article.getPicUrl());
-        value.put("Url", article.getUrl());
-        Articles = new HashMap();
-        Articles.put("item", value);
+        if (Articles == null) {
+            Articles = new ArrayList<>();
+        }
+        Articles.add(article);
         return this;
     }
 }

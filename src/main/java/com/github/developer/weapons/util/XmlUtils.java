@@ -1,5 +1,6 @@
 package com.github.developer.weapons.util;
 
+import com.github.developer.weapons.model.component.ComponentMessageArticle;
 import com.github.developer.weapons.model.component.ComponentTextMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
@@ -38,6 +39,7 @@ public class XmlUtils {
     public static String objectToXml(Object message) {
         XStream xs = new XStream();
         xs.alias("xml", message.getClass());
+        xs.alias("item", ComponentMessageArticle.class);
         return xs.toXML(message);
     }
 }

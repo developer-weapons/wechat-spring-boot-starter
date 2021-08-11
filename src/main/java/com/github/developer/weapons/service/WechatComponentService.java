@@ -12,6 +12,7 @@ import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -194,7 +195,6 @@ public class WechatComponentService extends WechatBaseService {
     public String encryptMsg(Object componentMessage) {
         beforeCalling();
         String str = XmlUtils.objectToXml(componentMessage);
-        System.out.println(str);
         try {
             return wxBizMsgCrypt.encryptMsg(str, String.valueOf(System.currentTimeMillis()), UUID.randomUUID().toString().replace("-", ""));
         } catch (AesException e) {
