@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class ComponentMessageArticle {
+public class item {
     private String Title;
     private String Description;
     private String PicUrl;

@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by codedrinker on 2019/4/27.
@@ -21,9 +19,9 @@ public class ComponentMessage {
     private String Content;
     private String MsgId;
     private Integer ArticleCount;
-    private List<ComponentMessageArticle> Articles;
+    private List<item> Articles;
 
-    public ComponentMessage addArticle(ComponentMessageArticle article) {
+    public ComponentMessage addArticle(item article) {
         if (Articles == null) {
             Articles = new ArrayList<>();
         }
