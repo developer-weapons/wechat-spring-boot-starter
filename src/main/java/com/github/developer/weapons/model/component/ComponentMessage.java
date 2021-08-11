@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by codedrinker on 2019/4/27.
@@ -27,7 +29,12 @@ public class ComponentMessage {
         if (Articles.getItem() == null) {
             Articles.setItem(new ArrayList<>());
         }
-        Articles.getItem().add(article);
+        Map<String, String> map = new HashMap<>();
+        map.put("Title", article.getTitle());
+        map.put("Description", article.getDescription());
+        map.put("PicUrl", article.getPicUrl());
+        map.put("Url", article.getUrl());
+        Articles.getItem().add(map);
         return this;
     }
 }
