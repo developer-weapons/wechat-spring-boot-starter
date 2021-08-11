@@ -25,6 +25,7 @@ public class ComponentMessage {
         value.put("Description", article.getDescription());
         value.put("PicUrl", article.getPicUrl());
         value.put("Url", article.getUrl());
+        Articles = new JSONObject();
         Articles.put("item", value);
         return this;
     }
