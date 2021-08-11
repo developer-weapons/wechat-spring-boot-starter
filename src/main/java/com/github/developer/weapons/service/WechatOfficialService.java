@@ -1,6 +1,7 @@
 package com.github.developer.weapons.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.developer.weapons.exception.WechatException;
 import com.github.developer.weapons.model.official.*;
 import com.github.developer.weapons.util.XmlUtils;
@@ -173,7 +174,8 @@ public class WechatOfficialService extends WechatBaseService {
             throw new WechatException("accessToken is missing");
         }
         String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + menus.get(0).getAccessToken();
-        String body = JSON.toJSONString(menus);
-        return post(url, body);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("button", menus);
+        return post(url, jsonObject.toJSONString());
     }
 }
