@@ -1,11 +1,10 @@
 package com.github.developer.weapons.model.component;
 
 import lombok.Data;
-
-import java.util.List;
-import java.util.Map;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class ComponentMessageArticle {
     private String Title;
     private String Description;
