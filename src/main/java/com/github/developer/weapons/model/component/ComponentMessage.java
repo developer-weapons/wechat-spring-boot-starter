@@ -17,7 +17,7 @@ public class ComponentMessage {
     private String MsgType;
     private String Content;
     private String MsgId;
-    private String ArticleCount;
+    private Integer ArticleCount;
     private ComponentMessageArticle Articles;
 
     public ComponentMessage addArticle(ComponentMessageArticle article) {
