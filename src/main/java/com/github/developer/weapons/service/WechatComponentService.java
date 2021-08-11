@@ -194,6 +194,7 @@ public class WechatComponentService extends WechatBaseService {
     public String encryptMsg(Object componentMessage) {
         beforeCalling();
         String str = XmlUtils.objectToXml(componentMessage);
+        System.out.println(str);
         try {
             return wxBizMsgCrypt.encryptMsg(str, String.valueOf(System.currentTimeMillis()), UUID.randomUUID().toString().replace("-", ""));
         } catch (AesException e) {
