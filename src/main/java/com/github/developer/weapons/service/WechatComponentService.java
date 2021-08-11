@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.developer.weapons.config.WechatComponentProperties;
 import com.github.developer.weapons.exception.WechatException;
-import com.github.developer.weapons.model.component.ComponentAuthInfo;
-import com.github.developer.weapons.model.component.ComponentAuthorizerInfo;
-import com.github.developer.weapons.model.component.ComponentTextMessage;
-import com.github.developer.weapons.model.component.ComponentVerifyInfo;
+import com.github.developer.weapons.model.component.*;
 import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.AesException;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
@@ -190,12 +187,12 @@ public class WechatComponentService extends WechatBaseService {
     /**
      * 根据回复消息进行自动加密
      *
-     * @param componentTextMessage
+     * @param componentMessage
      * @return
      */
-    public String encryptMsg(ComponentTextMessage componentTextMessage) {
+    public String encryptMsg(ComponentMessage componentMessage) {
         beforeCalling();
-        String str = XmlUtils.objectToXml(componentTextMessage);
+        String str = XmlUtils.objectToXml(componentMessage);
         try {
             return wxBizMsgCrypt.encryptMsg(str, String.valueOf(System.currentTimeMillis()), UUID.randomUUID().toString().replace("-", ""));
         } catch (AesException e) {
