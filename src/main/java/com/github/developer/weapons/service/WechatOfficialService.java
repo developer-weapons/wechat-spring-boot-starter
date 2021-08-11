@@ -155,7 +155,25 @@ public class WechatOfficialService extends WechatBaseService {
         }
         String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + officialTemplateMessage.getAccessToken();
         String body = JSON.toJSONString(officialTemplateMessage);
-        System.out.println(body);
+        return post(url, body);
+    }
+
+    /**
+     * 创建菜单
+     * POST https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
+     *
+     * @param menus
+     * @return
+     */
+    public String createMenu(List<OfficialMenu> menus) {
+        if (menus == null || menus.size() == 0) {
+            throw new WechatException("menus is empty");
+        }
+        if (menus.get(0).getAccessToken() == null) {
+            throw new WechatException("accessToken is missing");
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + menus.get(0).getAccessToken();
+        String body = JSON.toJSONString(menus);
         return post(url, body);
     }
 }
