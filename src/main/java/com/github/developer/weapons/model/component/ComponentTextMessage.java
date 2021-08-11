@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by codedrinker on 2019/4/27.
  */
 @Data
-public class ComponentTextMessage extends ComponentMessage {
+public class ComponentTextMessage {
     private String ToUserName;
     private String FromUserName;
     private Long CreateTime;

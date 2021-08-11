@@ -8,6 +8,7 @@ import com.github.developer.weapons.model.component.*;
 import com.github.developer.weapons.util.XmlUtils;
 import com.github.developer.weapons.util.aes.AesException;
 import com.github.developer.weapons.util.aes.WXBizMsgCrypt;
+import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -190,7 +191,7 @@ public class WechatComponentService extends WechatBaseService {
      * @param componentMessage
      * @return
      */
-    public String encryptMsg(ComponentMessage componentMessage) {
+    public String encryptMsg(Object componentMessage) {
         beforeCalling();
         String str = XmlUtils.objectToXml(componentMessage);
         try {
