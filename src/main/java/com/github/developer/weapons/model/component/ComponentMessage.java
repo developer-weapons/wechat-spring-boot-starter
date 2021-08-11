@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by codedrinker on 2019/4/27.
  */
@@ -17,15 +20,15 @@ public class ComponentMessage {
     private String Content;
     private String MsgId;
     private Integer ArticleCount;
-    private JSONObject Articles;
+    private Map Articles;
 
     public ComponentMessage addArticle(ComponentMessageArticle article) {
-        JSONObject value = new JSONObject();
+        Map value = new JSONObject();
         value.put("Title", article.getTitle());
         value.put("Description", article.getDescription());
         value.put("PicUrl", article.getPicUrl());
         value.put("Url", article.getUrl());
-        Articles = new JSONObject();
+        Articles = new HashMap();
         Articles.put("item", value);
         return this;
     }
