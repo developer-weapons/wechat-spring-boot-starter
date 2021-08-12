@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Slf4j
 public class WechatBaseService {
-    private OkHttpClient okHttpClient = new OkHttpClient();
+    protected OkHttpClient okHttpClient = new OkHttpClient();
 
     protected String post(String url, JSONObject body) {
         Request request = new Request.Builder()
