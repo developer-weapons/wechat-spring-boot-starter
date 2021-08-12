@@ -282,6 +282,7 @@ public class WechatOfficialService extends WechatBaseService {
             Response execute = okHttpClient.newCall(request).execute();
             if (execute.isSuccessful()) {
                 String string = execute.body().string();
+                log.info("WECHAT_OFFICIAL_ADD_MATERIAL : {}", string);
                 JSONObject jsonObject = JSON.parseObject(string);
                 return jsonObject.getString("media_id");
             }
