@@ -188,7 +188,9 @@ public class WechatOfficialService extends WechatBaseService {
         String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + menus.get(0).getAccessToken();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("button", menus);
-        return post(url, jsonObject.toJSONString());
+        String jsonString = jsonObject.toJSONString();
+        log.info("createMenu : {}", jsonString);
+        return post(url, jsonString);
     }
 
     /**
