@@ -351,7 +351,6 @@ public class WechatOfficialService extends WechatBaseService {
             if (execute.isSuccessful()) {
                 String string = execute.body().string();
                 JSONObject jsonObject = JSON.parseObject(string);
-                log.info("WECHAT_OFFICIAL_GET_MATERIAL_URL_INFO:{}", string);
                 return jsonObject.getJSONArray("news_item").getJSONObject(0).getString("url");
             }
             log.error("WECHAT_OFFICIAL_GET_MATERIAL_URL_ERROR, message : {}, response : {}", content, execute);
