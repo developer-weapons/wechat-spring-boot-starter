@@ -296,6 +296,41 @@ public class WechatOfficialService extends WechatBaseService {
     }
 
     /**
+     * 更新文章
+     *
+     * @param news
+     * @return
+     */
+    public String updateNews(OfficialNews news) {
+        String url = "https://api.weixin.qq.com/cgi-bin/material/update_news?access_token=%s";
+        JSONObject req = new JSONObject();
+        req.put("articles", news);
+        req.put("index", 0);
+        req.put("media_id", news.getMediaId());
+        String content = JSON.toJSONString(req);
+        Request request = new Request.Builder()
+                .addHeader("content-type", "application/json")
+                .url(String.format(url, news.getAccessToken()))
+                .post(RequestBody.create(MediaType.parse("application/json"), content))
+                .build();
+        try {
+            Response execute = okHttpClient.newCall(request).execute();
+            if (execute.isSuccessful()) {
+                assert execute.body() != null;
+                String string = execute.body().string();
+                log.info("WECHAT_OFFICIAL_UPDATE_MATERIAL : {}", string);
+                return string;
+            }
+            log.error("WECHAT_OFFICIAL_ADD_NEWS_ERROR, message : {}, response : {}", content, execute);
+            throw new WechatException("WECHAT_OFFICIAL_UPDATE_MATERIAL_ERROR" + execute);
+
+        } catch (Exception e) {
+            log.error("WECHAT_OFFICIAL_ADD_NEWS_ERROR, message : {}", content, e);
+            throw new WechatException("WECHAT_OFFICIAL_UPDATE_MATERIAL_ERROR" + e.getMessage());
+        }
+    }
+
+    /**
      * 获取永久链接
      *
      * @param officialMaterial

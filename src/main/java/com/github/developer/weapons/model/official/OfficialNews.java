@@ -31,4 +31,7 @@ public class OfficialNews extends Token<OfficialCustomMessage> {
 
     @JSONField(name = "only_fans_can_comment")
     private Integer onlyFansCanComment = 1;
+
+    @JSONField(name = "media_id")
+    private String mediaId;
 }
