@@ -178,14 +178,14 @@ public class WechatOfficialService extends WechatBaseService {
      * @param menus
      * @return
      */
-    public String createMenu(List<OfficialMenu> menus) {
+    public String createMenu(String accessToken, List<OfficialMenu> menus) {
         if (menus == null || menus.size() == 0) {
             throw new WechatException("menus is empty");
         }
-        if (menus.get(0).getAccessToken() == null) {
+        if (accessToken == null) {
             throw new WechatException("accessToken is missing");
         }
-        String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + menus.get(0).getAccessToken();
+        String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + accessToken;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("button", menus);
         String jsonString = jsonObject.toJSONString();

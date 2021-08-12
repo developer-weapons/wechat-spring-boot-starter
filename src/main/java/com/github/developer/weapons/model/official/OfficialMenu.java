@@ -7,7 +7,7 @@ import lombok.Data;
  * 公众号模板消息
  */
 @Data
-public class OfficialMenu extends Token<OfficialMenu> {
+public class OfficialMenu {
     /**
      * 类型
      */
