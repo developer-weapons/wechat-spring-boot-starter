@@ -24,10 +24,17 @@ public class OfficialCustomMessage extends Token<OfficialCustomMessage> {
     private MessageTypeEnum msgtype;
 
     /**
-     * 消息类型
+     * 文本消息内容
      */
     @Getter
     private Map<String, String> text;
+
+
+    /**
+     * 图片消息内容
+     */
+    @Getter
+    private Map<String, String> image;
 
     /**
      * 列表
@@ -93,6 +100,20 @@ public class OfficialCustomMessage extends Token<OfficialCustomMessage> {
             text = new HashMap<>();
         }
         text.put("content", content);
+        return this;
+    }
+
+    /**
+     * 图片消息的时候，进行图片设置
+     *
+     * @param mediaId
+     * @return
+     */
+    public OfficialCustomMessage withMediaId(String mediaId) {
+        if (image == null) {
+            image = new HashMap<>();
+        }
+        text.put("mediaId", mediaId);
         return this;
     }
 
