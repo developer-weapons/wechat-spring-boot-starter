@@ -18,6 +18,7 @@ public class ComponentMessage {
     private String MsgType;
     private String Content;
     private String MsgId;
+    private String MediaId;
     private Integer ArticleCount;
     private List<ComponentMessageArticle> Articles;
 
