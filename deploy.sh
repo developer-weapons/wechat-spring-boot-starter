@@ -2,7 +2,7 @@ rm -rf developer-weapons-repository
 mkdir developer-weapons-repository
 cd developer-weapons-repository
 git init
-git remote add origin https://github.com/developer-weapons/repository.git
+git remote add origin git@github.com:developer-weapons/repository.git
 git pull origin master
 git branch --set-upstream-to=origin/master master
 cd -
