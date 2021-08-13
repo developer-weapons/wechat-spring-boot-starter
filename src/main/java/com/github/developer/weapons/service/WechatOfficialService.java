@@ -333,6 +333,45 @@ public class WechatOfficialService extends WechatBaseService {
     }
 
     /**
+     * 创建永久二维码
+     *
+     * @param accessToken
+     * @param scene
+     * @return
+     */
+    public String createQrCode(String accessToken, String scene) {
+        String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s";
+        JSONObject req = new JSONObject();
+        req.put("action_name", "QR_LIMIT_STR_SCENE");
+        JSONObject sceneStrObj = new JSONObject();
+        sceneStrObj.put("scene_str", scene);
+        JSONObject sceneObj = new JSONObject();
+        sceneObj.put("scene", sceneStrObj);
+        req.put("action_info", sceneObj);
+        String content = JSON.toJSONString(req);
+        Request request = new Request.Builder()
+                .addHeader("content-type", "application/json")
+                .url(String.format(url, accessToken))
+                .post(RequestBody.create(MediaType.parse("application/json"), content))
+                .build();
+        try {
+            Response execute = okHttpClient.newCall(request).execute();
+            if (execute.isSuccessful()) {
+                assert execute.body() != null;
+                String string = execute.body().string();
+                log.info("WECHAT_OFFICIAL_CREATE_QR_CODE : {}", string);
+                return string;
+            }
+            log.error("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR, message : {}, response : {}", content, execute);
+            throw new WechatException("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR" + execute);
+
+        } catch (Exception e) {
+            log.error("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR, message : {}", content, e);
+            throw new WechatException("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR" + e.getMessage());
+        }
+    }
+
+    /**
      * 获取永久链接
      *
      * @param officialMaterial
