@@ -113,7 +113,7 @@ public class OfficialCustomMessage extends Token<OfficialCustomMessage> {
         if (image == null) {
             image = new HashMap<>();
         }
-        text.put("media_id", mediaId);
+        image.put("media_id", mediaId);
         return this;
     }
 
