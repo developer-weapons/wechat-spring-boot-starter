@@ -43,7 +43,7 @@ public class WechatBaseService {
             if (execute.isSuccessful()) {
                 assert execute.body() != null;
                 String result = execute.body().string();
-                log.debug("WechatBaseService post, url : {}, body: {}, result : {}", url, body, result);
+                log.info("WechatBaseService post, url : {}, body: {}, result : {}", url, body, result);
                 return result;
             }
             log.error("WechatBaseService post error, url : {}, body: {}, message : {}", url, body, execute.message());
