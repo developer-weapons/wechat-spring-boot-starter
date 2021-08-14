@@ -202,7 +202,7 @@ public class WechatOfficialService extends WechatBaseService {
     public String addMaterial(OfficialMaterial officialMaterial) {
         File file = null;
         try {
-            file = FileUtils.newFile(officialMaterial.getUrl());
+            file = officialMaterial.getFile() != null ? officialMaterial.getFile() : FileUtils.newFile(officialMaterial.getUrl());
             String url = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=image";
             URL urlGet = new URL(String.format(url, officialMaterial.getAccessToken()));
             HttpURLConnection conn = (HttpURLConnection) urlGet.openConnection();
