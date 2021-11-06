@@ -3,6 +3,7 @@ package com.github.developer.weapons.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.developer.weapons.exception.WechatException;
+import com.github.developer.weapons.model.Token;
 import com.github.developer.weapons.model.official.*;
 import com.github.developer.weapons.util.FileUtils;
 import com.github.developer.weapons.util.XmlUtils;
@@ -83,6 +84,30 @@ public class WechatOfficialService extends WechatBaseService {
      */
     public String toMsg(OfficialAutoReplyMessage officialAutoReplyMessage) {
         return XmlUtils.objectToXml(officialAutoReplyMessage);
+    }
+
+    /**
+     * 获取订阅号 token
+     * https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+     *
+     * @param query
+     * @return
+     */
+    public Token getAccessToken(OfficalAccessTokenQuery query) {
+        if (query.getAppid() == null) {
+            throw new WechatException("appid is missing");
+        }
+        if (query.getSecret() == null) {
+            throw new WechatException("secret is missing");
+        }
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", query.getAppid(), query.getSecret());
+        String body = get(url);
+        if (StringUtils.isNotBlank(body)) {
+            Token token = JSON.parseObject(body, Token.class);
+            return token;
+        } else {
+            throw new WechatException("obtain token error with " + body);
+        }
     }
 
     /**

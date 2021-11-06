@@ -32,6 +32,11 @@
 - 发送消息
 `com.github.developer.weapons.service.WechatOfficialService.sendMsg`
 
+### 1.3.0
+#### 公众号
+- 获取 accessToken
+`com.github.developer.weapons.service.WechatOfficialService.getAccessToken`
+
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库
 ```xml
@@ -47,6 +52,6 @@
 <dependency>
     <groupId>com.github.developer.weapons</groupId>
     <artifactId>wechat-spring-boot-starter</artifactId>
-    <version>1.2.8</version>
+    <version>1.3.0</version>
 </dependency>
 ```
