@@ -35,7 +35,9 @@
 ### 1.3.0
 #### 公众号
 - 获取 accessToken
-`com.github.developer.weapons.service.WechatOfficialService.getAccessToken`
+`com.github.developer.weapons.service.WechatOfficialService.getAccessToken`  
+- 创建带参数的二维码
+`com.github.developer.weapons.service.WechatOfficialService.createQrCode`
 
 ## Usage
 1. 在 `pom.xml` 里面添加公开仓库

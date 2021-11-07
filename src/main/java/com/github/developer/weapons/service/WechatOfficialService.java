@@ -364,6 +364,7 @@ public class WechatOfficialService extends WechatBaseService {
      * @param scene
      * @return
      */
+    @Deprecated
     public String createQrCode(String accessToken, String scene) {
         String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s";
         JSONObject req = new JSONObject();
@@ -386,6 +387,45 @@ public class WechatOfficialService extends WechatBaseService {
                 String string = execute.body().string();
                 log.info("WECHAT_OFFICIAL_CREATE_QR_CODE : {}", string);
                 return string;
+            }
+            log.error("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR, message : {}, response : {}", content, execute);
+            throw new WechatException("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR" + execute);
+
+        } catch (Exception e) {
+            log.error("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR, message : {}", content, e);
+            throw new WechatException("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR" + e.getMessage());
+        }
+    }
+
+
+    /**
+     * 创建二维码
+     *
+     * @param officialQrCodeCreate
+     * @return
+     */
+    public OfficialQrCode createQrCode(OfficialQrCodeCreate officialQrCodeCreate) {
+        String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s";
+        JSONObject req = new JSONObject();
+        req.put("action_name", officialQrCodeCreate.getActionName().name());
+        JSONObject sceneStrObj = new JSONObject();
+        sceneStrObj.put("scene_str", officialQrCodeCreate.getScene());
+        JSONObject sceneObj = new JSONObject();
+        sceneObj.put("scene", sceneStrObj);
+        req.put("action_info", sceneObj);
+        String content = JSON.toJSONString(req);
+        Request request = new Request.Builder()
+                .addHeader("content-type", "application/json")
+                .url(String.format(url, officialQrCodeCreate.getAccessToken()))
+                .post(RequestBody.create(MediaType.parse("application/json"), content))
+                .build();
+        try {
+            Response execute = okHttpClient.newCall(request).execute();
+            if (execute.isSuccessful()) {
+                assert execute.body() != null;
+                String string = execute.body().string();
+                log.info("WECHAT_OFFICIAL_CREATE_QR_CODE : {}", string);
+                return JSON.parseObject(string, OfficialQrCode.class);
             }
             log.error("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR, message : {}, response : {}", content, execute);
             throw new WechatException("WECHAT_OFFICIAL_CREATE_QR_CODE_ERROR" + execute);
